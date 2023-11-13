@@ -66,7 +66,6 @@ router.post("/create", bypass, async (req, res) => {
     const d = "looking";
     if (!profile) {
       profile = d;
-      console.log("Inside");
     }
 
     const data = { name, password, email, profile, clgstudent, verified };
@@ -76,8 +75,8 @@ router.post("/create", bypass, async (req, res) => {
 
     success = 1;
 
-    console.log(req.get("host"));
-    console.log(newUser);
+    // console.log(req.get("host"));
+    // console.log(newUser);
     const verificationURL = req.protocol + "://" + req.headers.host + "/api/user/verify/"+newUser['_id'];
     sendEmail(newUser,verificationURL);
     message = "Kindly verify the email id!!";
