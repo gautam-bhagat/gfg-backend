@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
+/*
 const sendEmail = async (user, verificationUrl) => {
   const fromMail = process.env.FROM_EMAIL;
   const passMail = process.env.PASSWORD;
@@ -31,7 +32,7 @@ const sendEmail = async (user, verificationUrl) => {
     });
   });
 
-  
+
   const mailOptions = {
     from: fromMail,
     to: user["email"],
@@ -50,6 +51,21 @@ const sendEmail = async (user, verificationUrl) => {
       }
     });
   });
-};
+}; 
+*/
 
+var postmark = require("postmark");
+
+// Send an email:
+var client = new postmark.ServerClient("c0ba3b5c-c232-42cb-aa5e-9dcce5045ed2");
+
+const Resend = require("resend")
+const sendEmail = async(user, verificationUrl)=>{
+  client.sendEmail({
+    "From": "geeksforgeeks@pccoepune.org",
+    "To": user["email"],
+    "Subject": "Test",
+    "TextBody": verificationUrl
+  });
+}
 module.exports = sendEmail;

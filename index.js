@@ -10,7 +10,7 @@ connect();
 const port = 3000
 
 app.get('/', (req, res) => {
-    const name = "Gautam Bhagat"
+    const name = "Gautam Bhagat";
   res.status(200).json({name});
 });
 
