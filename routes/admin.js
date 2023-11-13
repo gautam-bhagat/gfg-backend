@@ -2,6 +2,9 @@ const express = require("express");
 const bypass = require("../middleware/bypass");
 const Admin = require("../models/admin-model");
 
+const jwt = require("jsonwebtoken")
+require("dotenv").config();
+
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
@@ -39,6 +42,25 @@ router.post("/create", bypass, async (req, res) => {
  }
 });
 
+router.post("/login",bypass,async (req,res)=>{
+  let {username,password} = req.body;
+
+  let admin = await  Admin.findOne({username :  username});
+  if(admin){
+    let passChecked =  await decryptPass(admin.password,password)
+    if(passChecked){
+      const admintoken = generateToken({id:admin["_id"]});
+      return res.status(202).json({success : 1, admintoken,message :"Logged In"})
+    }else{
+      return res.status(401).json({success : 0, message :"Invalid Credentials!"})
+    }
+  }
+  else{
+    return res.status(401).json({success : 0, message :"No Such Account! Contact Administrator"})
+  }
+
+})
+
 ///Function to encrypt Password
 const encryptPass = async (pass) => {
   const salt = await bcrypt.genSalt(saltRounds);
@@ -50,6 +72,12 @@ const encryptPass = async (pass) => {
 const decryptPass = async (secured, raw) => {
   let passwordMatches = await bcrypt.compare(raw, secured);
   return passwordMatches;
+};
+
+const generateToken = (data) => {
+  const SECRET_KEY = process.env.JWT_KEY;
+  const token = jwt.sign(data, SECRET_KEY);
+  return token;
 };
 
 module.exports = router;

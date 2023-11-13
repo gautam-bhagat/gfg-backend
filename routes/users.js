@@ -154,9 +154,8 @@ router.post("/login", bypass, async (req, res) => {
       const check = await decryptPass(securedPass, password);
 
       if (check == true) {
-        const retrievedToken = await Token.findOne({ uid: user["_id"] });
 
-        const token = retrievedToken.token;
+        const token =  generateToken({id : user["_id"]})
         success = 1;
         message = "Logged In";
         return res.status(201).json({ success, message, token });
