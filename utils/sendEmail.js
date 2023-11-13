@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const sendEmail = (toEmail) => {
+const sendEmail = (user,verificationUrl) => {
   const fromMail = process.env.FROM_EMAIL;
   const passMail = process.env.PASSWORD;
 
@@ -18,9 +18,9 @@ const sendEmail = (toEmail) => {
 
   const mailOptions = {
     from: fromMail,
-    to: 'gautam.bhagat22@pccoepune.org',
+    to: user['email'],
     subject: "Kindly Verify your mail | PCCOE GFG",
-    text: toEmail,
+    text: "Hello "+user['name']+"\n"+verificationUrl,
   };
 
   transporter.sendMail(mailOptions, (err, info) => {

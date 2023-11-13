@@ -77,9 +77,9 @@ router.post("/create", bypass, async (req, res) => {
     success = 1;
 
     console.log(req.get("host"));
-    console.log(req.headers);
-    const body = req.protocol + "://" + req.headers.host + "/api/user/create";
-    sendEmail(body);
+    console.log(newUser);
+    const verificationURL = req.protocol + "://" + req.headers.host + "/api/user/verify/"+newUser['_id'];
+    sendEmail(newUser,verificationURL);
     message = "Kindly verify the email id!!";
     return res.status(200).json({ success, message });
   } catch (error) {
