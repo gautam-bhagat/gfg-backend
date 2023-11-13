@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const sendEmail = (user,verificationUrl) => {
+const sendEmail = async (user, verificationUrl) => {
   const fromMail = process.env.FROM_EMAIL;
   const passMail = process.env.PASSWORD;
 
@@ -18,18 +18,21 @@ const sendEmail = (user,verificationUrl) => {
 
   const mailOptions = {
     from: fromMail,
-    to: user['email'],
+    to: user["email"],
     subject: "Kindly Verify your mail | PCCOE GFG",
-    text: "Hello "+user['name']+"\n"+verificationUrl,
+    text: "Hello " + user["name"] + "\n" + verificationUrl,
   };
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Sentt");
-      console.log(info.response);
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(info);
+        resolve(info);
+      }
+    });
   });
 };
 
