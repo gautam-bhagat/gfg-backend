@@ -14,8 +14,24 @@ const sendEmail = async (user, verificationUrl) => {
       user: fromMail,
       pass: passMail,
     },
+    port: 465,
+    secure: true,
   });
 
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log("Server is ready to take our messages");
+        resolve(success);
+      }
+    });
+  });
+
+  
   const mailOptions = {
     from: fromMail,
     to: user["email"],
