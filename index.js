@@ -7,7 +7,7 @@ app.use(express.json());
 const connect = require('./db_connect/connection')
 connect();
 
-const port = 3000
+const port = 5000
 
 app.get('/', (req, res) => {
     const name = "Gautam Bhagat";
