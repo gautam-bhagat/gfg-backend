@@ -18,6 +18,10 @@ app.use('/api/user' ,require('./routes/users'));
 
 app.use('/api/admin' ,require('./routes/admin'));
 
+app.use('/api/team' ,require('./routes/team'));
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

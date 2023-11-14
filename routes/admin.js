@@ -80,4 +80,8 @@ const generateToken = (data) => {
   return token;
 };
 
+const degenerateToken = (data) =>{
+ return jwt.verify(data, process.env.JWT_KEY);
+}
+
 module.exports = router;
