@@ -2,7 +2,7 @@ const express = require("express");
 const authenticateAdmin = require("../middleware/authenticate-admin");
 const bypass = require("../middleware/bypass");
 const Team = require("../models/team-model");
-const Event = require("../models/events-model");
+const Events = require("../models/events-model");
 const router = express.Router();
 
 router.get("/", bypass, async (req, res) => {
@@ -11,7 +11,7 @@ router.get("/", bypass, async (req, res) => {
 
 
 router.get("/all", bypass, async (req, res) => {
-  const result = await Event.find({}).sort([["date", 1]]);
+  const result = await Events.find({}).sort([["date", 1]]);
   res.status(200).json({ result });
 });
 
@@ -34,12 +34,14 @@ router.post("/add", authenticateAdmin, async (req, res) => {
      
     } ;
 
+    console.log(data)
+
     if (!(name)) {
       return res
         .status(500)
         .json({ success, message: "Internal Server Error" });
     }
-    const eve = await Event(data);
+    const eve = await Events(data);
     await eve.save();
     if (eve) {
       success = 1;
