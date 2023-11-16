@@ -61,19 +61,19 @@ router.post("/add", authenticateAdmin, async (req, res) => {
   }
 });
 
-/*
+
 router.delete('/delete',authenticateAdmin,async (req,res)=>{
     const {id} = req.body;
     try{
-        const t = await Team.findByIdAndDelete(id)
+        const t = await Events.findByIdAndDelete(id)
         console.log(t)
-        return res.status(203).json({success :1,message:"Delete"})
+        return res.status(200).json({success :1,message:"Delete"})
     }catch(err){
         console.log(err);
         return res.status(500).json({success :0,message:"Internal Server Error"})
     }
 })
-
+/*
 router.put("/update", authenticateAdmin, async (req, res) => {
     try {
       let success = 0;
