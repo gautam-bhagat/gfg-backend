@@ -10,12 +10,17 @@ router.get('/all', bypass, async(req,res)=>{
 
 router.post('/add', bypass, async(req,res)=>{
 
-    const { event,image} = req.body;
+    try {
+        const { event,image} = req.body;
     const imageObj = await Images({event,image})
     await imageObj.save()
 
     // const result = await Images.find({});
-    res.status(202).json({imageObj})
+    res.status(202).json({success : 1 , imageObj})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success : 0 , message :"Internal Server Error"})
+    }
 })
 
 
