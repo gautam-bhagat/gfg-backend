@@ -23,5 +23,18 @@ router.post('/add', bypass, async(req,res)=>{
     }
 })
 
+router.delete('/delete', bypass, async(req,res)=>{
+
+    try {
+            const {_id} = req.body;
+            let response = await Images.findOneAndDelete({ _id: _id })
+    // const result = await Images.find({});
+    res.status(202).json({success : 1 , response})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success : 0 , message :"Internal Server Error"})
+    }
+})
+
 
 module.exports = router
